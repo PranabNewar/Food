@@ -1,0 +1,16 @@
+#Parcel
+-Dev Build
+-Local server
+-HMR (hot Module Reloading) -(it update the all changes)
+-File Watching Algorithm -- written in c++
+-caching
+-Image optimization
+- Minification
+-Bundling
+-Compressing the file
+- Consistent Hashing
+-code splitting
+- differential bundling - it will give you the support older browser
+-Https
+-tree shaking - remove unused code
+-different dev and prod bundler
