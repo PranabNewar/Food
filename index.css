@@ -49,6 +49,7 @@ margin:5px
     width: 200px;
     height:300px;
     margin:10px;
+    word-wrap: break-word;
 
     
 }
@@ -60,4 +61,23 @@ margin:5px
     flex-wrap: wrap;
     margin:10px;
     padding:10px;
+}
+.shimmer-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+.shimmer-card{
+    margin:10px;
+    padding: 20px;
+    width: 200px;
+    height:300px;
+    margin:10px;
+    background-color:lightgrey;
+}
+.login-btn{
+    margin: 10px;
+    padding:10px;
+
 }
