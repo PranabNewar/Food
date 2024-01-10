@@ -14,3 +14,19 @@
 -Https
 -tree shaking - remove unused code
 -different dev and prod bundler
+
+
+
+
+Two types of Export/Import 
+export default component;
+import component from path;
+- Named Export/Import
+export const Component;
+import {Component} from "path";
+
+
+# React Hooks
+(Normal Javascript utility functions)
+- useState() - superpowerfull react variables
+- useEffect() 

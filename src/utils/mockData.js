@@ -1,27 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-
-const Header = () =>{
-    return(
-    <div className="header">
-        <div className="logo-container">
-            <img className="logo" src="https://t3.ftcdn.net/jpg/02/41/30/72/360_F_241307210_MjjaJC3SJy2zJZ6B7bKGMRsKQbdwRSze.jpg"/>
-        </div>
-        <div className="nav-items">
-            <ul>
-                <li>Home</li>
-                <li>About us</li>
-                <li>Contact us</li>
-                <li>Cart</li>
-                
-
-            </ul>
-        </div>
-    </div>
-    )
-
-}
-
 const restrautList = [
     {
       type: "restaurant",
@@ -754,53 +730,4 @@ const restrautList = [
     },
   ];
 
-
-
- const RestraurantCard = (props)=>{
-    const {resData} = props
-    const {name,cuisines,avgRating, cloudinaryImageId} = resData.data
-    console.log(resData)
-    return(
-        <div className="res-card">
-            <img alt="res-logo" src={"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/"+   cloudinaryImageId}></img>
-            <h3>{name}</h3>
-            <h4>{cuisines.join(",")}</h4>
-            <h4>{avgRating}stars</h4>
-        </div>
-    )
- }
-const Body =()=>{
-    return(
-        <div className="body">
-            <div className="search">
-                <input type="text" placeholder="Search"></input>
-                <button>Search</button>
-            </div>
-            <div className="res-container">
-                {/* //componenet */}
-               {restrautList.map((restraunt)=>(
-                <RestraurantCard resData ={restraunt} key={restraunt.data.id}/>
-               ))
-} 
-                
-
-            </div>
-        </div>
-    )
-}
-
-const AppLayout =() =>{
-    return (
-        <div className="app">
-        <Header/>
-        <Body/>
-
-        </div>
-    )
-    
-    
-}
-
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout/>);
+  export default restrautList;
