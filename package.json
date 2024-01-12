@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "this is for react learning",
   "scripts": {
-    "start":"parcel index.html",
-    "build":"parcel build parcel.index.html ",
+    "start": "parcel index.html",
+    "build": "parcel build parcel.index.html ",
     "test": "jest"
   },
   "author": "",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1"
   }
-  
 }

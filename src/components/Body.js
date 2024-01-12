@@ -2,6 +2,7 @@ import RestraurantCard from "./RestraurantCard";
 // import restrautList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 const Body = () => {
   //Local State Variables - Super powerful variable
   const [restraunt, setRestraunt] = useState([]); //here it did array destruturing
@@ -80,7 +81,7 @@ const Body = () => {
       <div className="res-container">
         {/* //componenet */}
         {filteredRestraunt.map((restraunt) => (
-          <RestraurantCard resData={restraunt} key={restraunt.info.id} />
+         <Link to={"/restraunts/" + restraunt.info.id} key={restraunt.info.id}> <RestraurantCard resData={restraunt}  /></Link>
         ))}
       </div>
     </div>

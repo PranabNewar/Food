@@ -30,3 +30,6 @@ import {Component} from "path";
 (Normal Javascript utility functions)
 - useState() - superpowerfull react variables
 - useEffect() 
+# 2 types of routing in a web app
+- client side Routing
+- server side Routing
