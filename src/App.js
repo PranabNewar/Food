@@ -7,6 +7,7 @@ import Aboutus from "./components/Aboutus";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestrauntMenu from "./components/RestrauntMenu";
+import UserClass from "./components/UserClass";
 
 const AppLayout = () => {
   console.log(<Body />); // virtual dom basically an object
@@ -34,7 +35,9 @@ const appRouter = createBrowserRouter([
 {
     path:"/restraunts/:resId",  //dynamic Route
     element:<RestrauntMenu/>
-}],
+}
+
+],
   errorElement:<Error/>
   
  },

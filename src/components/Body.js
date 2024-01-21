@@ -11,8 +11,8 @@ const Body = () => {
   const [filteredRestraunt, setFilteredRestraunt] = useState([]);
   const [searchText, setSearchText] = useState("");
   // whenever state variables update, react triggers a reconciliation cycle(RE - render component)
-  console.log("body rendered")
-  
+  console.log("body rendered");
+
   useEffect(() => {
     getData();
   }, []);
@@ -21,7 +21,6 @@ const Body = () => {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.16363&lng=91.7611838&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
-
     const json = await data.json();
     console.log(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -29,9 +28,12 @@ const Body = () => {
     setRestraunt(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
-    setFilteredRestraunt(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    // const card
+    setFilteredRestraunt(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    console.log(json.data);
   }
-
 
   function handleSearchInput(e) {
     setSearchText(e.target.value);
@@ -43,7 +45,7 @@ const Body = () => {
   //   return <Shimmer/>
   // }
 
-  return restraunt.length === 0 ? (
+  return restraunt?.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -57,11 +59,11 @@ const Body = () => {
           className="search-btn"
           onClick={() => {
             const filterData = restraunt.filter((res) => {
-             return res.info.name.toLowerCase().includes(searchText.toLowerCase());
-            
-           
+              return res.info.name
+                .toLowerCase()
+                .includes(searchText.toLowerCase());
             });
-            setFilteredRestraunt(filterData)
+            setFilteredRestraunt(filterData);
             console.log(filterData, "fill");
           }}
         >
@@ -71,7 +73,7 @@ const Body = () => {
           className="filter-btn"
           onClick={() => {
             let filterRes = restraunt.filter((res) => res.info.avgRating > 4);
-            setRestraunt(filterRes);
+            setFilteredRestraunt(filterRes);
             console.log("button clicked", filterRes);
           }}
         >
@@ -80,8 +82,11 @@ const Body = () => {
       </div>
       <div className="res-container">
         {/* //componenet */}
-        {filteredRestraunt.map((restraunt) => (
-         <Link to={"/restraunts/" + restraunt.info.id} key={restraunt.info.id}> <RestraurantCard resData={restraunt}  /></Link>
+        {filteredRestraunt?.map((restraunt) => (
+          <Link to={"/restraunts/" + restraunt.info.id} key={restraunt.info.id}>
+            {" "}
+            <RestraurantCard resData={restraunt} />
+          </Link>
         ))}
       </div>
     </div>
