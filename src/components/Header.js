@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import Logo from "../assets/images/myfoodlogo.jpg"
+import useOnlineStatus from "../utils/useOnline";
 
 const Header = () =>{
     const [isLogin,setIsLogin] = useState(false);
@@ -16,6 +17,9 @@ const Header = () =>{
     // useEffect(()=>{
     //     console.log("header render using useEffect with dependency in array");
     // },[isLogin])
+
+
+const onlineStatus = useOnlineStatus(); 
     return(
     <div className="header">
         <div className="logo-container">
@@ -26,6 +30,9 @@ const Header = () =>{
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/about">About us</Link></li>
                 <li><Link to ="/contact">Contact us</Link></li>
+                <li><Link to ="/grocery">Grocery</Link></li>
+
+                <li>Online status:{onlineStatus?"✅":"🔴"} </li>
                 <li>Cart</li>
 
                {isLogin?<button className="login-btn" onClick={()=>{setIsLogin(false)}}>Logout</button>:<button className="login-btn" onClick={()=>{setIsLogin(true)}}>Login</button>}

@@ -7,8 +7,8 @@ const Error = ()=>{
         <div>
             <h1>Opps!!!!!!!</h1>
             <h2>Something went Wrong</h2>
-            <h3>{err.error.message}</h3>
-            <h3>{err.status}:{err.statusText}</h3>
+            {/* <h3>{err.error.message}</h3>
+            <h3>{err.status}:{err.statusText}</h3> */}
 
         </div>
     )

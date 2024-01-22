@@ -3,6 +3,7 @@ import RestraurantCard from "./RestraurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnline";
 const Body = () => {
   //Local State Variables - Super powerful variable
   const [restraunt, setRestraunt] = useState([]); //here it did array destruturing
@@ -44,6 +45,10 @@ const Body = () => {
   // {
   //   return <Shimmer/>
   // }
+  const onlineStatus = useOnlineStatus();
+  if(!onlineStatus){
+    return <h1>Looks your internet connection is lost</h1>
+  }
 
   return restraunt?.length === 0 ? (
     <Shimmer />

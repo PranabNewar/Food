@@ -33,3 +33,8 @@ import {Component} from "path";
 # 2 types of routing in a web app
 - client side Routing
 - server side Routing
+
+# Lazy Loading
+- it is used to increase an application's performance by redcing the initial loading time
+- it use lazy(()=>import("path")) here import is a function
+- Also we need to wrap up the component inside <Suspense fallback={}> component </Suspense> // here in fallback we can show shimmer or loading till component loads.

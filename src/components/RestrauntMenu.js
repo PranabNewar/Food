@@ -1,29 +1,17 @@
-import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
-import { MENU_API } from "../utils/constants";
 import Star from "../assets/svg/star.svg";
 import Cycle from "../assets/images/cycle.avif";
-import MenuCard from "./MenuCard";
 import RestrauntMenuBtn from "./RestrauntMenuBtn";
+import useRestrauntMenu from "../utils/useRestrauntMenu";
 
 
 const RestrauntMenu = () => {
-  const [resInfo, setResinfo] = useState(null);
 
   const { resId } = useParams();
   console.log(resId);
-  useEffect(() => {
-    fetchMenu();
-  }, []);
-
-  const fetchMenu = async () => {
-    const data = await fetch(MENU_API + resId);
-    const json = await data.json();
-    setResinfo(json.data);
-    console.log(resInfo);
-    console.log("hey");
-  };
+  const resInfo = useRestrauntMenu(resId);
+ 
   if (resInfo === null) {
     return <Shimmer />;
   }

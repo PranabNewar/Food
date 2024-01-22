@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -8,6 +8,8 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestrauntMenu from "./components/RestrauntMenu";
 import UserClass from "./components/UserClass";
+// import Grocery from "./components/Grocery";
+const Grocery = lazy(()=>import("./components/Grocery"))
 
 const AppLayout = () => {
   console.log(<Body />); // virtual dom basically an object
@@ -35,8 +37,11 @@ const appRouter = createBrowserRouter([
 {
     path:"/restraunts/:resId",  //dynamic Route
     element:<RestrauntMenu/>
+},
+{
+  path:"/grocery",  //dynamic Route
+  element:<Suspense fallback={<h1>Loading......</h1>}><Grocery/></Suspense> //while using lazy loading we have to use Suspense Component
 }
-
 ],
   errorElement:<Error/>
   
