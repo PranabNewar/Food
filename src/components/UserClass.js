@@ -9,17 +9,17 @@ class UserClass extends React.Component {
 
   }
   componentDidMount(){
-    this.timer = setInterval(()=>{
-console.log("set interval called")
-    },1000)
+//     this.timer = setInterval(()=>{
+// console.log("set interval called")
+//     },1000)
 
   
     
-    console.log(this.props.name,"child component did mount")
+    // console.log(this.props.name,"child component did mount")
   }
   componentWillUnmount(){ // here componentWillMount will clear the component  
     
-clearInterval(this.timer)
+// clearInterval(this.timer)
   }
   render() {
     const { name, location } = this.props;

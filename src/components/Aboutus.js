@@ -1,6 +1,9 @@
 import { Component } from "react";
 import User from "./User";
 import UserClass from "./UserClass";
+import UserContext from "../utils/UserContext";
+
+//here we can not use hook here
 
 
 class Aboutus extends Component{
@@ -22,6 +25,11 @@ componentDidMount(){
         return(
         <div className="about-container">
             <h1>ABout us page</h1>
+            <div>Loggedin user:   {/*it is a component */}
+                <UserContext.Consumer>
+                    {({logggdInUser})=><h1 className="font-bold">{logggdInUser}</h1>}
+                </UserContext.Consumer>
+            </div>
             <UserClass name ={"first Newar class()"} location={"Guwahati,Assam"}/>
             <User name ={"second Newar class()"} location={"Rowmari,Assam"}/>
            

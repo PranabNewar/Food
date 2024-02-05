@@ -2,20 +2,31 @@ import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import Star from "../assets/svg/star.svg";
 import Cycle from "../assets/images/cycle.avif";
-import RestrauntMenuBtn from "./RestrauntMenuBtn";
 import useRestrauntMenu from "../utils/useRestrauntMenu";
-
+import RestrauntCategory from "./RestrauntCategory";
+import { useState } from "react";
 
 const RestrauntMenu = () => {
-
   const { resId } = useParams();
-  console.log(resId);
-  const resInfo = useRestrauntMenu(resId);
- 
+  const [showIndex,setShowIndex]= useState(null)
+
+
+  
+  // console.log(resId);
+
+  const resInfo = useRestrauntMenu(resId); //Custom hook
+
   if (resInfo === null) {
     return <Shimmer />;
   }
-  console.log(resInfo);
+  console.log(resInfo, "info ");
+  const restrauntDetails = resInfo.cards.filter((res) => {
+    return (
+      res.card?.card?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+    );
+  });
+  console.log(restrauntDetails, "details");
   const {
     name,
     costForTwoMessage,
@@ -23,74 +34,78 @@ const RestrauntMenu = () => {
     avgRating,
     totalRatingsString,
     areaName,
-  } = resInfo?.cards[0]?.card?.card?.info;
-  const { itemCards, title } =
-    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
-//   console.log(itemCards, "itemCard");
-  const { lastMileTravelString } = resInfo?.cards[0]?.card?.card?.info?.sla;
+  } = restrauntDetails[0]?.card?.card?.info;
+
+  const { lastMileTravelString } = restrauntDetails[0]?.card?.card?.info?.sla;
   console.log(lastMileTravelString);
-  const { message } = resInfo?.cards[0]?.card?.card?.info?.feeDetails;
- const categories = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter((res)=>{
-//  console.log(res)
-    return res.card?.["card"]?.["@type"] === 
-    "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
- })
- console.log(categories)
-  const {cards} =resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR;
-//   console.log(cards)
+  const { message } = restrauntDetails[0]?.card?.card?.info?.feeDetails;
+  const categories =
+    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter(
+      //cards[2].groupedCard.cardGroupMap.REGULAR.cards
+      (res) => {
+        //  console.log(res)
+        return (
+          res.card?.["card"]?.["@type"] ===
+          "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+        );
+      }
+    );
+
+  console.log(restrauntDetails[0]?.card?.card?.info, "res");
   return (
-    <div className="menu">
-      <div className="menu-heading-container">
-        <div className="restraunt-name">
-          <p className="restraunt-menu-name">{name}</p>
-          <p className="restraunt-menu-cuisines">{cuisines.join(",")}</p>
-          <div className="restraunt-address-wrapper">
-            <p className="restraunt-areaname">
+    <div className="w-7/12 mx-auto">
+      <div className="flex justify-between pt-4">
+        <div className="">
+          <p className="font-bold text-lg py-1">{name}</p>
+          <p className="font-sm text-sm text-gray-500 py-1">
+            {cuisines.join(",")}
+          </p>
+          <div className="">
+            <p className="inline-block font-sm text-sm text-gray-500 py-1">
               {areaName}
               {","}
             </p>
-            <p className="restraunt-lastMileTravel">{lastMileTravelString}</p>
+            <p className="inline-block font-sm text-sm text-gray-500 py-1">
+              {lastMileTravelString}
+            </p>
           </div>
         </div>
 
-        <button className="rating-card">
-          <span className="restraunt-rating-wrapper">
-            {" "}
-            <span className="menu-rating-icon">
-              <img src={Star} />
+        <div className="border border-slate-200 relative top-5 right-4 rounded w-[75px] h-[70px]">
+          <div className="py-1 px-2">
+            <span className=" inline-block">
+              <img className=" w-4 mr-1" src={Star} />
             </span>
-            <span>{avgRating}</span>
+            <span className="font-bold text-green-600">{avgRating}</span>
+          </div>
+          <hr></hr>
+          <span className="text-[10px] text-gray-400 font-medium px-1">
+            {totalRatingsString}
           </span>
-          <span className="restraunt-total-ratings">{totalRatingsString}</span>
-        </button>
+        </div>
       </div>
-      <ul>
-        <li className="delivery-distance">
-          <img src={Cycle}></img>
-          <p className="delivery-fee-apply">{message}</p>
+      <ul className="mt-4">
+        <li className="flex">
+          <img className="w-5" src={message && Cycle}></img>
+          <p className="pl-2 font-sm text-gray-500 text-sm">{message}</p>
         </li>
       </ul>
-      <hr className="restraunt-header-separator"></hr>
+      <hr className=" border-dashed border-gray-400 my-4"></hr>
       <h3>{costForTwoMessage}</h3>
-      {categories?.map((category)=>{
-      
-   return <RestrauntMenuBtn category={category?.card?.card}  />
-
-        // console.log(category.card.card.itemCards,"hey");
+      {categories?.map((category,index) => {
+        return (
+          <RestrauntCategory
+            key={category?.card?.card.title}
+            category={category?.card?.card}
+            showList={index===showIndex?true:false}
+            setShowIndex = { () => setShowIndex(index)}
+            setHideIndex = {()=>setShowIndex(null)}
+          
+          />
+        );
 
       })}
-      {/* <div id="menu-card"> */}
-            {/* <ul>
-            {itemCards?.map((res) => (
-                // <MenuCard items={res} key={res?.card?.info?.id} />
-                //   <li key={res?.card?.info?.id}>
-                //     {res?.card?.info?.name} - {"Rs."}{" "}
-                //     {res?.card?.info?.price / 100 ||
-                //       res?.card?.info?.defaultPrice / 100}{" "}
-                //   </li>
-            ))}
-            </ul> */}
-      {/* </div> */}
+      {console.log(showIndex,"Showindex ")}
     </div>
   );
 };

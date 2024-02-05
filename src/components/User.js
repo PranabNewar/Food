@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 
 const User =({name,location})=>{
 
-    useEffect(()=>{
-     const timer=   setInterval(()=>{
-            console.log("interval")
-        },1000)
+    // useEffect(()=>{
+    //  const timer=   setInterval(()=>{
+    //         console.log("interval")
+    //     },1000)
 
-        return ()=>{   // here return will clear the component
-            clearInterval(timer)
-        }
-    },[])
+        // return ()=>{   // here return will clear the component
+        //     clearInterval(timer)
+        // }
+    // },[])
     const [count] = useState(0)
     return(
         <div className="user-func">

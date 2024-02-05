@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -7,17 +7,45 @@ import Aboutus from "./components/Aboutus";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestrauntMenu from "./components/RestrauntMenu";
-import UserClass from "./components/UserClass";
+import UserContext from "./utils/UserContext";
 // import Grocery from "./components/Grocery";
 const Grocery = lazy(()=>import("./components/Grocery"))
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
+import persistStore from "redux-persist/es/persistStore";
+import { PersistGate } from "redux-persist/integration/react";
 
 const AppLayout = () => {
   console.log(<Body />); // virtual dom basically an object
+
+//authentication
+let persistor = persistStore(appStore)
+  const [userName,setUserName] = useState()
+  useEffect(()=>{
+//Make a api call and send user name and password
+ const data = {
+  name: " Pranab Newar"
+ };
+ setUserName(data.name);
+
+  },[])
+  // console.log(userName)
   return (
+    //defaul value
+    <Provider store={appStore}>
+      <PersistGate persistor={persistor}>
+    <UserContext.Provider value = {{logggdInUser: userName,setUserName}} >  
     <div className="app">
+      {/* <UserContext.Provider value={{logggdInUser: "Ms Dhoni"}}> */}
       <Header />
+
+      {/* </UserContext.Provider> */}
 <Outlet/>
     </div>
+    </UserContext.Provider>
+    </PersistGate>
+    </Provider>
   );
 };
 const appRouter = createBrowserRouter([
@@ -39,8 +67,12 @@ const appRouter = createBrowserRouter([
     element:<RestrauntMenu/>
 },
 {
-  path:"/grocery",  //dynamic Route
+  path:"/grocery",  
   element:<Suspense fallback={<h1>Loading......</h1>}><Grocery/></Suspense> //while using lazy loading we have to use Suspense Component
+},
+{
+  path:"/cart",  //dynamic Route
+  element:<Cart/>
 }
 ],
   errorElement:<Error/>
