@@ -19,58 +19,57 @@ const Body = () => {
   const [current, setCurrent] = useState(0);
 
   // whenever state variables update, react triggers a reconciliation cycle(RE - render component)
-  console.log("body rendered");
+  //console.log("body rendered");
 
   const { logggdInUser, setUserName } = useContext(UserContext);
 
   useEffect(() => {
     getData();
-  
   }, []);
 
-
   const resData = uesRestrauntData();
-  console.log(resData,"data from custom hook")
+  //console.log(resData, "data from custom hook");
 
   async function getData() {
-   try{ const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.176673&lng=91.760003&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    console.log(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    const restruntList = json.data.cards.filter((res) => {
-      return res.card.card.id === "restaurant_grid_listing";
-    });
-    setWhatsOnYourMind(
-      json.data?.cards?.filter((res) => {
-        return res?.card?.card?.id === "whats_on_your_mind";
-      })
-    );
-    setTopRestraunt(json.data?.cards[1]?.card?.card);
-    console.log(whatsOnYourMind, "in mind");
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.176673&lng=91.760003&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
+      const json = await data.json();
+      //console.log(
+      //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+      //     ?.restaurants
+      // );
+      const restruntList = json.data.cards.filter((res) => {
+        return res.card.card.id === "restaurant_grid_listing";
+      });
+      setWhatsOnYourMind(
+        json.data?.cards?.filter((res) => {
+          return res?.card?.card?.id === "whats_on_your_mind";
+        })
+      );
+      setTopRestraunt(json.data?.cards[1]?.card?.card);
+      //console.log(whatsOnYourMind, "in mind");
 
-    setRestraunt(
-      restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    // const card
+      setRestraunt(
+        restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
+      // const card
 
-    setFilteredRestraunt(
-      restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
+      setFilteredRestraunt(
+        restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
 
-    console.log(json.data);
-    console.log(filteredRestraunt, "filterr");
-    console.log(topRestraunt, "restrauntList");
-   }
-   catch(err){
-    console.log(err)
-   }
+      //console.log(json.data);
+      //console.log(filteredRestraunt, "filterr");
+      //console.log(topRestraunt, "restrauntList");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const onlineStatus = useOnlineStatus();
-  console.log(onlineStatus);
+  //console.log(onlineStatus);
   //Early return
   if (!onlineStatus) {
     return (
@@ -82,7 +81,7 @@ const Body = () => {
 
   function handleSearchInput(e) {
     setSearchText(e.target.value);
-    // console.log(searchText)
+    // //console.log(searchText)
   }
   //conditional rendering
   // if(restraunt.length===0)
@@ -100,7 +99,7 @@ const Body = () => {
     }
   }
   function nextSlide() {
-    console.log("clicked");
+    //console.log("clicked");
     if (
       current >=
       topRestraunt?.gridElements?.infoWithStyle?.restaurants.length - 1 - 7
@@ -114,7 +113,7 @@ const Body = () => {
   return restraunt?.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className=" w-[20rem] md:min-w-[961px] mx-auto">
+    <div className=" w-[20rem] sm:min-w-[600px] md:min-w-[670px] lg:min-w-[961px] mx-auto">
       {whatsOnYourMind.length !== 0 && (
         <div className="overflow-hidden my-10 ">
           <WhatOnMind whatsOnYourMind={whatsOnYourMind} />
@@ -125,14 +124,20 @@ const Body = () => {
         <div className=" overflow-hidden mt-6 ">
           <div>
             <div className="flex justify-between mb-6">
-              <h1 className="font-medium text-xs md:text-2xl">
+              <h1 className="font-medium text-xs md:text-xl lg:text-2xl">
                 {topRestraunt?.header?.title}
               </h1>
               <div>
-                <button className="px-2 hover:bg-sky-100" onClick={prevSlide}>
+                <button
+                  className="px-2 sm:px-1 hover:bg-sky-100"
+                  onClick={prevSlide}
+                >
                   ⬅
                 </button>
-                <button className="px-2 hover:bg-slate-100" onClick={nextSlide}>
+                <button
+                  className="px-2 sm:px-1 hover:bg-slate-100"
+                  onClick={nextSlide}
+                >
                   ➡
                 </button>
               </div>
@@ -158,16 +163,16 @@ const Body = () => {
       )}
       <hr className="my-10"></hr>
 
-      <div className="flex justify-center items-center mt-6 mb-4">
+      <div className="flex justify-center items-center mx-auto mt-6 mb-4">
         <input
-          className="mr-4 mt-1 p-1 w-24 text-[6px] md:text-[15px] md:w-60 border rounded outline-none "
+          className="mr-4 mt-1 p-1 w-24 text-[6px] sm:text-[8px] md:text-[10px] lg:text-[15px] md:w-44 lg:w-60 border rounded outline-none "
           type="text"
           placeholder="Search"
           onChange={handleSearchInput}
         ></input>
         <div>
           <button
-            className="bg-green-300 rounded  p-1 px-2 mr-2 md:text-[15px]  text-[8px]  md:text-md"
+            className="bg-green-300 rounded  p-1 px-2 mr-2 md:text-[10px] sm:text-[8px] lg:text-[15px] text-[8px]  "
             onClick={() => {
               const filterData = restraunt.filter((res) => {
                 return res.info.name
@@ -175,30 +180,32 @@ const Body = () => {
                   .includes(searchText.toLowerCase());
               });
               setFilteredRestraunt(filterData);
-              console.log(filterData, "fill");
+              //console.log(filterData, "fill");
             }}
           >
             Search
           </button>
 
           <button
-            className="bg-rose-300 rounded  p-1 px-2 mr-6 text-[8px] md:text-[15px]"
+            className="bg-rose-300 rounded  p-1 px-2 mr-6 md:text-[10px] sm:text-[8px] lg:text-[15px] text-[8px]"
             onClick={() => {
-              let filterRes = restraunt.filter((res) => res.info.avgRating > 4.2);
+              let filterRes = restraunt.filter(
+                (res) => res.info.avgRating > 4.2
+              );
               setFilteredRestraunt(filterRes);
-              console.log("button clicked", filterRes);
+              //console.log("button clicked", filterRes);
             }}
           >
             Top rated restraunts
           </button>
 
-          <input
+          {/* <input
             className=" "
             value={logggdInUser}
             onChange={(e) => {
               setUserName(e.target.value);
-            }}
-          />
+            }} */}
+          {/* /> */}
         </div>
       </div>
       <div className="flex flex-wrap    ">

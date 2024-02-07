@@ -13,7 +13,7 @@ const uesRestrauntData = () =>{
              );
              const json = await data.json();
             setResData(json.data)
-         console.log(resData,"resData")
+         //console.log(resData,"resData")
             }
             catch(err){
              console.log(err)

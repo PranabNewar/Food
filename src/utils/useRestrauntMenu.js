@@ -12,8 +12,8 @@ const useRestrauntMenu =(resId)=>{
     const data = await fetch(MENU_API + resId);
     const json = await data.json();
     setResinfo(json.data);
-    console.log(resInfo);
-    console.log("hey");
+    //console.log(resInfo);
+    //console.log("hey");
   };
     return resInfo
 }

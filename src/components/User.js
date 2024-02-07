@@ -4,7 +4,7 @@ const User =({name,location})=>{
 
     // useEffect(()=>{
     //  const timer=   setInterval(()=>{
-    //         console.log("interval")
+    //         //console.log("interval")
     //     },1000)
 
         // return ()=>{   // here return will clear the component
