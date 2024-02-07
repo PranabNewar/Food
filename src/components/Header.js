@@ -120,6 +120,18 @@ const Header = () => {
           isToggle ? "block" : "hidden"
         } `}
       >
+          <li className="px-4 ">
+            <Link to="/search">
+              {" "}
+              <img
+                className="lg:w-4 mx-1 sm:w-2 w-1  md:w-3  inline-block"
+                src={SearchIcon}
+              />
+              <span className="md:text-sm font-semibold text-gray-600 sm:text-xs text-[10px] lg:text-base">
+                Search
+              </span>{" "}
+            </Link>
+          </li>
         <li className="py-2">Home</li>
         <li className="py-2">Online</li>
       </ul>
