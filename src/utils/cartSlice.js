@@ -6,39 +6,32 @@ const cartSlice = createSlice({
     items: [],
     itemsTotalQuantity: 0,
     itemsTotalAmount: 0,
-    restaurantName: "",
+    restaurantName : '',
   }, //what initially cart state will be  what whill be cart item
   reducers: {
     //we will create reducer corrosponding to action  //reducers are basically an object has different kind of action which we have take
 
     addItem: (state, action) => {
-      console.log(action.payload, "payload");
-
       //it will modified the state based on the action
       //mutating there states here directly
       const itemIndex = state.items.findIndex((item) => {
-        console.log(item, "itemindex1");
-        return item.card.info.id === action.payload.item.card.info.id;
+        // console.log(item.card.info.id,"itemindex1")
+        return item.card.info.id === action.payload.card.info.id;
       });
       if (itemIndex >= 0) {
         // console.log(current(state.items[itemIndex]),"check")
         state.items[itemIndex].cartQuantity += 1;
-        state.items[itemIndex].restaurant = action.payload.restaurant;
+
         // console.log(current( state.items[itemIndex].cartQuantity),"quantityyyyyyyyyyyy")
+      
+
 
         // console.log(current(state))
       }
       // console.log(itemIndex,"itemIndex")
       else {
-        const tempProduct = {
-          ...action.payload.item,
-          cartQuantity: 1,
-          price: action.payload.item.card.info.price,
-          defaultFrice: action.payload.item.card.info.defaultFrice,
-          restaurant: action.payload.restaurant,
-        };
+        const tempProduct = { ...action.payload, cartQuantity: 1, price:action.payload.card.info.price,defaultFrice:action.payload.card.info.defaultFrice };
         state.items.push(tempProduct);
-        console.log(tempProduct, "temp");
       }
       // state.items.push(action.payload);
     },
@@ -46,18 +39,19 @@ const cartSlice = createSlice({
       // these are reducer function which are basically map to an action
 
       const removeItems = state.items.filter(
-        (item) => item.card.info.id !== action.payload.item.card.info.id
+        (item) => item.card.info.id !== action.payload.card.info.id
       );
       state.items = removeItems;
     },
     increaseItem: (state, action) => {
       const itemIndex = state.items.findIndex(
-        (item) => { console.log(action.payload)
-          return item.card.info.id === action.payload.card.info.id}
+        (item) => item.card.info.id === action.payload.card.info.id
       );
       if (itemIndex >= 0) {
         state.items[itemIndex].cartQuantity += 1;
-        state.items[itemIndex].restaurant = action.payload.restaurant;
+        
+
+
       }
     },
     decreaseItem: (state, action) => {
@@ -84,8 +78,10 @@ const cartSlice = createSlice({
               (price / 100) * item.cartQuantity ||
               (defaultPrice / 100) * item.cartQuantity;
             console.log(priceTotalEach, "inreducerTotal");
+
             cartTotal.totalPrice += priceTotalEach;
             console.log(cartTotal.totalPrice, "inreducerTotalprice");
+
             cartTotal.totalQuantity += item.cartQuantity;
             return cartTotal;
           },
@@ -95,17 +91,17 @@ const cartSlice = createSlice({
           }
         );
       state.itemsTotalQuantity = totalQuantity;
-      state.itemsTotalAmount = totalPrice && totalPrice.toFixed(2);
+      state.itemsTotalAmount = totalPrice&& totalPrice.toFixed(2);
     },
     clearCart: (state, action) => {
-      console.log("clear calls");
+        console.log("clear calls")
       state.items = [];
-      state.itemsTotalQuantity = 0;
+      state.itemsTotalQuantity = 0
       state.itemsTotalAmount = 0;
     },
-    addRestaurant: (state, action) => {
-      state.restaurantName = action.payload;
-    },
+    addRestaurant: (state,action)=>{
+      state.restaurantName= action.payload
+    }
   }, // these are reducer functions
 });
 
@@ -116,7 +112,6 @@ export const {
   increaseItem,
   decreaseItem,
   getTotals,
-  addRestaurant,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

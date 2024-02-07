@@ -36,7 +36,7 @@ const RestrauntMenu = () => {
     areaName,
   } = restrauntDetails[0]?.card?.card?.info;
 
-  dispatch(addRestaurant(name));
+  // dispatch(addRestaurant(name));
 
   const { lastMileTravelString } = restrauntDetails[0]?.card?.card?.info?.sla;
   //console.log(lastMileTravelString);

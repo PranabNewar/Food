@@ -7,8 +7,8 @@ const MenuCard = ({ items,restaurant }) => {
   const dispatch = useDispatch();
  
  const handleItem = (item)=>{
-  dispatch(addItem({item,restaurant}))
-  dispatch(addRestaurant(restaurant))
+  dispatch(addItem(item))
+  // dispatch(addRestaurant(restaurant))
  }
   return (
     <div>
@@ -26,7 +26,7 @@ const MenuCard = ({ items,restaurant }) => {
             <p className="lg:text-xs md:text-[10px] text-[8px] md:py-2 py-1 lg:py-4 font-regular text-ellipsis overflow-hidden text-gray-500   ">{item?.card?.info?.description}</p>
           </div>
         <div className="w-2/12  ">
-         <button onClick={()=>handleItem(item,restaurant)} className="p2 bg-white shadow-lg  mt-10   lg:mx-6 md:mt-12 md:mx-2 lg:mt-16 text-green-600 lg:px-2 md:px-1 px-0 text-xs md:text-sm lg:text-base ml-2 font-mediuam text-md absolute rounded-lg">Add +</button>
+         <button onClick={()=>handleItem(item)} className="p2 bg-white shadow-lg  mt-10   lg:mx-6 md:mt-12 md:mx-2 lg:mt-16 text-green-600 lg:px-2 md:px-1 px-0 text-xs md:text-sm lg:text-base ml-2 font-mediuam text-md absolute rounded-lg">Add +</button>
             <img className=" lg:w-[116px] md:w-[80px] md:h-[70px] w-[70px] h-[60px] lg:h-[96px] rounded-lg " src={MENU_CARD_IMG_URL + item?.card?.info?.imageId}></img>
           
         </div>
