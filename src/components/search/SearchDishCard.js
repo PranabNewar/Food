@@ -4,7 +4,7 @@ import { addItem } from "../../utils/cartSlice";
 import RightArrow from "../../assets/svg/right-arrow.svg";
 import { Link } from "react-router-dom";
 import Veg from "../../assets/images/veg.png";
-import Nonveg from "../../assets/images/Nonveg.png";
+import Nonveg from "../../assets/images/nonveg.png";
 
 const SearchDishCard = ({ dish }) => {
   const dispatch = useDispatch();
