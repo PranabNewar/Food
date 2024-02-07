@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SWIGGY_SEARCH_API } from "../../utils/constants";
+import { SWIGGY_SEARCH_API, generateProxyUrl } from "../../utils/constants";
 import SearchIcon from "../../assets/svg/search.svg";
 
 import SearchResultList from "./SearchResultList";
@@ -18,7 +18,9 @@ const SearchBar = () => {
 
   const getSearchResults = async () => {
     //console.log("api - ", searchQuery);
-    const data = await fetch(SWIGGY_SEARCH_API + searchQuery);
+    const resource = generateProxyUrl(SWIGGY_SEARCH_API + searchQuery);
+
+    const data = await fetch(resource);
     const json = await data.json();
     //console.log(json);
     setSearchResult(json.data);

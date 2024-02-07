@@ -6,3 +6,5 @@ export const MENU_CARD_IMG_URL ="https://media-assets.swiggy.com/swiggy/image/up
 export const MENU_API = "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.16363&lng=91.7611838&restaurantId=";
 export const COROUSEL_IMG_ID = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/"
 export const SWIGGY_SEARCH_API = "https://www.swiggy.com/dapi/restaurants/search/suggest?lat=26.176673&lng=91.760003&str="
+export const PROXY_CORS = "https://corsproxy.org/?";
+export const generateProxyUrl = (URL) => PROXY_CORS + encodeURIComponent(URL)
