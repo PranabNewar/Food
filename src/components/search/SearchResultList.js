@@ -17,7 +17,7 @@ const SearchResultList = ({ searchResult }) => {
   //console.log(suggestions, "as a prop");
   async function handleChnage(metadata) {
     const data = await fetch(
-      `https://www.swiggy.com/dapi/restaurants/search/v3?lat=26.176673&lng=91.760003&str=${query}&trackingId=null&submitAction=SUGGESTION&queryUniqueId=246bef4d-e9c7-f6e6-2be4-b920682c690d&metaData=${metadata}`
+      `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/search/v3?lat=26.176673&lng=91.760003&str=${query}&trackingId=null&submitAction=SUGGESTION&queryUniqueId=246bef4d-e9c7-f6e6-2be4-b920682c690d&metaData=${metadata}`
     );
     const json = await data.json();
     setSearchedData(json.data);
