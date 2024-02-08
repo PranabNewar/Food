@@ -46,13 +46,17 @@ const Header = () => {
     <div className="border-b-1 border-slate-100 shadow-lg ">
       <div className="flex justify-between  ">
         <div className="flex items-center">
-        <a href="/">
-          {" "}
-          <img className="lg:w-20 md:w-16 sm:w-12 w-10 ml-2" src={Logo} />
-        </a>
-        <div onClick={(e)=>{dispatch(toggleMenu(true))}}>
-         <h1>location</h1> 
-        </div>
+          <a href="/">
+            {" "}
+            <img className="lg:w-20 md:w-16 sm:w-12 w-10 ml-2" src={Logo} />
+          </a>
+          <div
+            onClick={(e) => {
+              dispatch(toggleMenu(true));
+            }}
+          >
+            {/* <h1>location</h1>  */}
+          </div>
         </div>
         {/* <div className="flex justify-between"> */}
         <ul className=" md:flex md:justify-between hidden md:items-center">
@@ -152,7 +156,6 @@ const Header = () => {
           </li>{" "}
         </Link>
       </ul>
-      
 
       {/* <hr className="   border-gray-200 shadow-xl"></hr> */}
     </div>

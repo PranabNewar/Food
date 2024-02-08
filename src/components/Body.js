@@ -34,7 +34,9 @@ const Body = () => {
   async function getData() {
     try {
       const resource = generateProxyUrl(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.176673&lng=91.760003&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        "https://www.swiggy.com/mapi/restaurants/list/v5?offset=0&is-seo-homepage-enabled=true&lat=26.1157917&lng=91.7085933&carousel=true&third_party_vendor=1"
+      );
+      // https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.176673&lng=91.760003&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
 
       const data = await fetch(resource);
       const json = await data.json();
@@ -120,7 +122,7 @@ const Body = () => {
           <WhatOnMind whatsOnYourMind={whatsOnYourMind} />
         </div>
       )}
-      
+
       {topRestraunt?.gridElements?.infoWithStyle?.restaurants.length !== 0 && (
         <div className=" overflow-hidden mt-6  border-b pb-2">
           <div>
