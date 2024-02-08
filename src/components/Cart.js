@@ -12,11 +12,11 @@ const Cart = () => {
     dispatch(clearCart());
   };
   return (
-    <div className="w-8/12  mx-auto mt-6">
+    <div className="lg:w-8/12 w-11/12 mx-auto mt-6">
       <h1 className="text-center font-semibold"> Cart </h1>
       {cartItems.length !== 0 && (
         <button
-          className=" item-center mb-2 bg-blue-300 rounded-md p-1"
+          className=" item-center mb-2 lg:text-base md:text-sm text-[10px] bg-blue-300 rounded-md p-1"
           onClick={handleClearCart}
         >
           clear cart

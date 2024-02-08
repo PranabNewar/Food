@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 import { MENU_API, generateProxyUrl } from "./constants";
 
-const useRestrauntMenu =(resId)=>{
-    const [resInfo, setResinfo] = useState(null);
+const useRestrauntMenu = (resId) => {
+  const [resInfo, setResinfo] = useState(null);
 
- useEffect(() => {
+  useEffect(() => {
     fetchMenu();
   }, []);
 
   const fetchMenu = async () => {
-   try{ const resource = generateProxyUrl(MENU_API + resId)
+    try {
+      const resource = generateProxyUrl(MENU_API + resId);
 
-    const data = await fetch( resource);
-    const json = await data.json();
-    setResinfo(json.data);}
-    //console.log(resInfo);
-    //console.log("hey");
-    catch(err){
-      console.log(err)
+      const data = await fetch(resource);
+      const json = await data.json();
+      setResinfo(json.data);
+      console.log(resInfo, "resInfo");
+    } catch (err) {
+      //console.log("hey");
+      console.log(err);
     }
   };
-    return resInfo
-}
+  return resInfo;
+};
 export default useRestrauntMenu;

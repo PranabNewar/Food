@@ -33,6 +33,10 @@ const Body = () => {
 
   async function getData() {
     try {
+      const screenSize= window.innerWidth;
+      if(screenSize<1360){
+
+      
       const resource = generateProxyUrl(
         "https://www.swiggy.com/mapi/restaurants/list/v5?offset=0&is-seo-homepage-enabled=true&lat=26.1157917&lng=91.7085933&carousel=true&third_party_vendor=1"
       );
@@ -62,8 +66,41 @@ const Body = () => {
       setFilteredRestraunt(
         restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
       );
+    }
+    else{
+      
+      
+      const resource = generateProxyUrl(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.176673&lng=91.760003&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
 
+      const data = await fetch(resource);
+      const json = await data.json();
+      //console.log(
+      //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle ?.restaurants
+      // );
+      const restruntList = json.data.cards.filter((res) => {
+        return res.card.card.id === "restaurant_grid_listing";
+      });
+      setWhatsOnYourMind(
+        json.data?.cards?.filter((res) => {
+          return res?.card?.card?.id === "whats_on_your_mind";
+        })
+      );
+      setTopRestraunt(json.data?.cards[1]?.card?.card);
+      //console.log(whatsOnYourMind, "in mind");
+
+      setRestraunt(
+        restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
+      // const card
+
+      setFilteredRestraunt(
+        restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
       console.log(json.data);
+
+    }
       //console.log(filteredRestraunt, "filterr");
       console.log(topRestraunt, "restrauntList");
     } catch (err) {
