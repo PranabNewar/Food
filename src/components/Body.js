@@ -39,8 +39,7 @@ const Body = () => {
       const data = await fetch(resource);
       const json = await data.json();
       //console.log(
-      //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-      //     ?.restaurants
+      //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle ?.restaurants
       // );
       const restruntList = json.data.cards.filter((res) => {
         return res.card.card.id === "restaurant_grid_listing";
@@ -62,9 +61,9 @@ const Body = () => {
         restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
       );
 
-      //console.log(json.data);
+      console.log(json.data);
       //console.log(filteredRestraunt, "filterr");
-      //console.log(topRestraunt, "restrauntList");
+      console.log(topRestraunt, "restrauntList");
     } catch (err) {
       console.log(err);
     }
@@ -117,13 +116,13 @@ const Body = () => {
   ) : (
     <div className=" w-[20rem] sm:min-w-[600px] md:min-w-[670px] lg:min-w-[961px] mx-auto">
       {whatsOnYourMind.length !== 0 && (
-        <div className="overflow-hidden my-10 ">
+        <div className="overflow-hidden my-10 pb-2 border-b ">
           <WhatOnMind whatsOnYourMind={whatsOnYourMind} />
         </div>
       )}
-      <hr></hr>
-      {topRestraunt?.gridElements?.infoWithStyle?.restaurants?.length !== 0 && (
-        <div className=" overflow-hidden mt-6 ">
+      
+      {topRestraunt?.gridElements?.infoWithStyle?.restaurants.length !== 0 && (
+        <div className=" overflow-hidden mt-6  border-b pb-2">
           <div>
             <div className="flex justify-between mb-6">
               <h1 className="font-medium text-xs md:text-xl lg:text-2xl">
@@ -163,7 +162,6 @@ const Body = () => {
           </div>
         </div>
       )}
-      <hr className="my-10"></hr>
 
       <div className="flex justify-center items-center mx-auto mt-6 mb-4">
         <input

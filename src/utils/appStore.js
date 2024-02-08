@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice"
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
+import sideBarSlice from "./sideBarSlice";
 
 let persistConfig={
     key:'root',
@@ -9,6 +10,7 @@ let persistConfig={
 }
 const rootReducer = combineReducers({
     cart: cartReducer,
+    sideBar: sideBarSlice,
 
 })
 let persistedReducer = persistReducer(persistConfig,rootReducer)
@@ -18,6 +20,7 @@ const appStore = configureStore({  // here we need to add our slice into the sto
     //     cart: cartReducer,
     // }
     reducer: persistedReducer,
+    
     middleware: (gDM) =>
     gDM({
       serializableCheck: false,

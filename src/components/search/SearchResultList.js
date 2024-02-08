@@ -16,11 +16,11 @@ const SearchResultList = ({ searchResult }) => {
   const { suggestions } = searchResult;
   //console.log(suggestions, "as a prop");
   async function handleChnage(metadata) {
-    const resource = generateProxyUrl( `https://www.swiggy.com/dapi/restaurants/search/v3?lat=26.176673&lng=91.760003&str=${query}&trackingId=null&submitAction=SUGGESTION&queryUniqueId=246bef4d-e9c7-f6e6-2be4-b920682c690d&metaData=${metadata}`)
-
-    const data = await fetch(
-      resource
+    const resource = generateProxyUrl(
+      `https://www.swiggy.com/dapi/restaurants/search/v3?lat=26.176673&lng=91.760003&str=${query}&trackingId=null&submitAction=SUGGESTION&queryUniqueId=246bef4d-e9c7-f6e6-2be4-b920682c690d&metaData=${metadata}`
     );
+
+    const data = await fetch(resource);
     const json = await data.json();
     setSearchedData(json.data);
   }
@@ -40,12 +40,18 @@ const SearchResultList = ({ searchResult }) => {
                 to={`/search?query=${encodeURIComponent(searchResult.query)}`}
                 key={index}
               >
-                <div className="flex md:my-4 my-2 items-center bg-slate-100">
-                <img className="md:w-24 w-10" src={CDN_URL+res.cloudinaryId} />
-              <div className="pl-4 ">
-                  <h1 className="text-xs md:text-base"  onClick={() => handleChnage(res.metadata)}>{res.text}</h1>
-                <h5 className="text-xs md:text-base">{res.tagToDisplay}</h5>
-                </div>
+                <div
+                  className="flex md:my-4 my-2 items-center bg-slate-100"
+                  onClick={() => handleChnage(res.metadata)}
+                >
+                  <img
+                    className="md:w-24 w-10"
+                    src={CDN_URL + res.cloudinaryId}
+                  />
+                  <div className="pl-4 ">
+                    <h1 className="text-xs md:text-base">{res.text}</h1>
+                    <h5 className="text-xs md:text-base">{res.tagToDisplay}</h5>
+                  </div>
                 </div>
               </Link>
             ))}

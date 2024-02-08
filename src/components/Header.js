@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTotals } from "../utils/cartSlice";
 import SearchIcon from "../assets/svg/search.svg";
 import Hamburger from "../assets/svg/hamburger.svg";
+import LeftSideBar from "./LeftSideBar";
+import sideBarSlice, { toggleMenu } from "../utils/sideBarSlice";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -41,10 +43,17 @@ const Header = () => {
   //console.log("cart", cartItems);
   //console.log();
   return (
-    <div className="border-b-1 border-slate-100 shadow-lg">
-      <div className="flex justify-between ">
-       <a href="/"> <img className="lg:w-20 md:w-16 sm:w-12 w-10 ml-2" src={Logo} /></a>
-
+    <div className="border-b-1 border-slate-100 shadow-lg ">
+      <div className="flex justify-between  ">
+        <div className="flex items-center">
+        <a href="/">
+          {" "}
+          <img className="lg:w-20 md:w-16 sm:w-12 w-10 ml-2" src={Logo} />
+        </a>
+        <div onClick={(e)=>{dispatch(toggleMenu(true))}}>
+         <h1>location</h1> 
+        </div>
+        </div>
         {/* <div className="flex justify-between"> */}
         <ul className=" md:flex md:justify-between hidden md:items-center">
           <li className="px-4 ">
@@ -105,7 +114,7 @@ const Header = () => {
           )}</li> */}
         </ul>
         {/* </div> */}
-        <div className="md:hidden items-center my-auto ml-2">
+        <div className="md:hidden items-center my-auto ml-2 ">
           <img
             className="w-8 cursor-pointer ml-4"
             onClick={(e) => {
@@ -116,25 +125,34 @@ const Header = () => {
         </div>
       </div>
       <ul
-        className={`md:hidden flex-col text-center  ${
+        className={`md:hidden bg-white w-full flex-col text-center z-10 absolute  ${
           isToggle ? "block" : "hidden"
         } `}
       >
-          <li className="px-4 ">
-            <Link to="/search">
-              {" "}
-              <img
-                className="lg:w-4 mx-1 sm:w-2 w-1  md:w-3  inline-block"
-                src={SearchIcon}
-              />
-              <span className="md:text-sm font-semibold text-gray-600 sm:text-xs text-[10px] lg:text-base">
-                Search
-              </span>{" "}
-            </Link>
-          </li>
-        <li className="py-2">Home</li>
-        <li className="py-2">Online</li>
+        <li className="px-4 ">
+          <Link to="/search">
+            {" "}
+            <img
+              className="lg:w-4 mx-1 sm:w-2 w-1  md:w-3  inline-block"
+              src={SearchIcon}
+            />
+            <span className="md:text-sm font-semibold text-gray-600 sm:text-xs text-[10px] lg:text-base">
+              Search
+            </span>{" "}
+          </Link>
+        </li>
+        <li className="px-4 font-semibold text-gray-600 md:text-sm sm:text-xs ml-2 text-[10px] lg:text-base ">
+          <Link to="/">Home</Link>
+        </li>
+
+        <Link to="/cart">
+          {" "}
+          <li className="px-4 font-semibold text-gray-600 md:text-sm sm:text-xs ml-3  text-[10px] lg:text-base z-10 ">
+            Cart({totalCartItems})
+          </li>{" "}
+        </Link>
       </ul>
+      
 
       {/* <hr className="   border-gray-200 shadow-xl"></hr> */}
     </div>

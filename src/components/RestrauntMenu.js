@@ -15,7 +15,9 @@ const RestrauntMenu = () => {
   // //console.log(resId);
 
   const resInfo = useRestrauntMenu(resId); //Custom hook
-
+  useEffect(() => {
+    setShowIndex(0);
+  }, []);
   if (resInfo === null) {
     return <Shimmer />;
   }
@@ -108,6 +110,7 @@ const RestrauntMenu = () => {
             key={category?.card?.card.title}
             category={category?.card?.card}
             showList={index === showIndex ? true : false}
+            index={showIndex}
             setShowIndex={() => setShowIndex(index)}
             setHideIndex={() => setShowIndex(null)}
             restaurant={name}

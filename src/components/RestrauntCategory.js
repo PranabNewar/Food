@@ -1,6 +1,7 @@
 
+import { useEffect } from "react";
 import MenuCard from "./MenuCard";
-const RestrauntCategory = ({category,restaurant ,showList,setShowIndex,setHideIndex})=>{
+const RestrauntCategory = ({category,restaurant ,showList,setShowIndex,setHideIndex,index})=>{
 const {title,itemCards} = category;
 
 //console.log(itemCards,"title")
@@ -14,6 +15,7 @@ function handleChange(){
     }
     // setShowList(!showList) // it is a toggle button when true it will false vice versa
 }
+
     return(
         <div>
             <div className="bg-slate-50 shadow-lg md:my-3 my-2 lg:my-4 p-1 md:p-2 lg:p-4 ">

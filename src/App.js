@@ -18,6 +18,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import SearchPage from "./components/search/SearchPage";
 import SearchRestraunt from "./components/search/SearchRestraunt";
 import SearchDishCard from "./components/search/SearchDishCard";
+import LeftSideBar from "./components/LeftSideBar";
 
 const AppLayout = () => {
   console.log(<Body />); // virtual dom basically an object
@@ -25,6 +26,7 @@ const AppLayout = () => {
   //authentication
   let persistor = persistStore(appStore);
   const [userName, setUserName] = useState();
+
   useEffect(() => {
     //Make a api call and send user name and password
     const data = {
@@ -40,10 +42,18 @@ const AppLayout = () => {
         <UserContext.Provider value={{ logggdInUser: userName, setUserName }}>
           <div className="app">
             {/* <UserContext.Provider value={{logggdInUser: "Ms Dhoni"}}> */}
+            {/* <div className="absolute bg-slate-400 h-full ">
+              <LeftSideBar />
+            </div>
+            <div className="absolute left-[1255px] z-10 bg-slate-400 h-full ">
+              <LeftSideBar />
+            </div> */}
+            
             <Header />
 
             {/* </UserContext.Provider> */}
             <Outlet />
+            {/* <LeftSideBar /> */}
           </div>
         </UserContext.Provider>
       </PersistGate>

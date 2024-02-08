@@ -1,83 +1,50 @@
-import React from 'react';
-import { useFormik } from 'formik';
-
-// A custom validation function. This must return an object
-// which keys are symmetrical to our values/initialValues
-const validate = values => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  } else if (values.firstName.length > 15) {
-    errors.firstName = 'Must be 15 characters or less';
-  }
-
-  if (!values.lastName) {
-    errors.lastName = 'Required';
-  } else if (values.lastName.length > 20) {
-    errors.lastName = 'Must be 20 characters or less';
-  }
-
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-
-  return errors;
-};
+import { useRef, useState } from "react";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
-  // Pass the useFormik() hook initial form values, a validate function that will be called when
-  // form values change or fields are blurred, and a submit function that will
-  // be called when the form is submitted
-  const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-    },
-    validate,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  const [error, setError] = useState("");
+  const email = useRef(null);
+  const password = useRef(null);
+  function handleButtonClick() {
+    const errMessage = checkValidData(
+      email.current.value,
+      password.current.value
+    );
+    setError(errMessage);
+  }
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="firstName">First Name</label>
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.firstName}
-      />
-      {formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}
-
-      <label htmlFor="lastName">Last Name</label>
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.lastName}
-      />
-      {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
-
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
-      />
-      {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-
-      <button type="submit">Submit</button>
-    </form>
+    <div>
+      <form
+        className="w-[300px] h-[300px] p-5 mx-auto bg-slate-50 border-black shadow-md rounded-md"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <h1 className="font-semibold text-lg">Sign In</h1>
+        <input
+          ref={email}
+          className="block py-3  w-full px-1 mx-auto my-4 outline-none "
+          type="text"
+          placeholder=" Enter email"
+        />
+        <input
+          ref={password}
+          className="block mx-auto w-full py-3 my-4 outline-none rounded-md"
+          type="password"
+          placeholder=" Enter password"
+        />
+        <p className="text-red-400 text-xs p-1 ">{error}</p>
+        {/* <div className="mx-auto w-40"> */}
+        <button
+          onClick={handleButtonClick}
+          className="mx-auto mt-3 bg-green-300 w-full py-2 px-2 rounded-md"
+        >
+          {" "}
+          Sign In
+        </button>
+        {/* </div> */}
+      </form>
+    </div>
   );
 };
-
-
-
 export default Login;
