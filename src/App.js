@@ -10,19 +10,22 @@ import RestrauntMenu from "./components/RestrauntMenu";
 import UserContext from "./utils/UserContext";
 // import Grocery from "./components/Grocery";
 const Grocery = lazy(() => import("./components/Grocery"));
-import { Provider } from "react-redux";
-import appStore from "./utils/appStore";
+import { Provider, useDispatch } from "react-redux";
+import appStore from "./utils/redux/appStore";
 import Cart from "./components/Cart";
 import persistStore from "redux-persist/es/persistStore";
 import { PersistGate } from "redux-persist/integration/react";
 import SearchPage from "./components/search/SearchPage";
 import SearchRestraunt from "./components/search/SearchRestraunt";
 import SearchDishCard from "./components/search/SearchDishCard";
-import LeftSideBar from "./components/LeftSideBar";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./utils/firebase";
+import { addUser, removeUser } from "./utils/redux/userSlice";
+import LocationContextProvider from "./utils/context/LocationContextProvider";
 
 const AppLayout = () => {
   console.log(<Body />); // virtual dom basically an object
-
+  // const dispatch =useDispatch()
   //authentication
   let persistor = persistStore(appStore);
   const [userName, setUserName] = useState();
@@ -34,27 +37,31 @@ const AppLayout = () => {
     };
     setUserName(data.name);
   }, []);
+
   // console.log(userName)
+
   return (
     //defaul value
     <Provider store={appStore}>
       <PersistGate persistor={persistor}>
         <UserContext.Provider value={{ logggdInUser: userName, setUserName }}>
-          <div className="app">
-            {/* <UserContext.Provider value={{logggdInUser: "Ms Dhoni"}}> */}
-            {/* <div className="absolute bg-slate-400 h-full ">
+          <LocationContextProvider>
+            <div className="app">
+              {/* <UserContext.Provider value={{logggdInUser: "Ms Dhoni"}}> */}
+              {/* <div className="absolute bg-slate-400 h-full ">
               <LeftSideBar />
             </div>
             <div className="absolute left-[1255px] z-10 bg-slate-400 h-full ">
               <LeftSideBar />
             </div> */}
-            
-            <Header />
 
-            {/* </UserContext.Provider> */}
-            <Outlet />
-            {/* <LeftSideBar /> */}
-          </div>
+              <Header />
+
+              {/* </UserContext.Provider> */}
+              <Outlet />
+              {/* <LeftSideBar /> */}
+            </div>
+          </LocationContextProvider>
         </UserContext.Provider>
       </PersistGate>
     </Provider>

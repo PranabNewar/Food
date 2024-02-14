@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { CDN_URL } from "../../utils/constants";
-import { addItem } from "../../utils/cartSlice";
+import { addItem } from "../../utils/redux/cartSlice";
 import RightArrow from "../../assets/svg/right-arrow.svg";
 import { Link } from "react-router-dom";
 import Veg from "../../assets/images/veg.png";
@@ -48,7 +48,9 @@ const SearchDishCard = ({ dish }) => {
           </div>
           <div className="flex justify-between mt-1 ">
             <div className="dishName-price pb-4 w-8/12">
-              <p className="font-bold text-xs md:text-sm">{res.card.card.info.name}</p>
+              <p className="font-bold text-xs md:text-sm">
+                {res.card.card.info.name}
+              </p>
               <p className="md:text-sm text-xs">
                 {"₹. "} {res.card.card.info.price / 100}
               </p>

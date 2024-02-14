@@ -6,7 +6,7 @@ import useRestrauntMenu from "../utils/useRestrauntMenu";
 import RestrauntCategory from "./RestrauntCategory";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addRestaurant } from "../utils/cartSlice";
+import { addRestaurant } from "../utils/redux/cartSlice";
 
 const RestrauntMenu = () => {
   const { resId } = useParams();

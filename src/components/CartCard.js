@@ -4,7 +4,7 @@ import {
   decreaseItem,
   getTotals,
   increaseItem,
-} from "../utils/cartSlice";
+} from "../utils/redux/cartSlice";
 import { useEffect } from "react";
 import { CDN_URL } from "../utils/constants";
 
@@ -31,9 +31,15 @@ const CartCard = ({ items }) => {
           <h1>location</h1>
         </div> */}
       <div className="flex  justify-between border-b  pb-2 ">
-        <h4 className="lg:w-4/12 w-5/12 lg:text-base md:text-sm text-xs pl-12 font-semibold">items</h4>
-        <h4 className="lg:w-4/12 w-2/12 lg:text-base md:text-sm text-xs text-center font-semibold">Quantity</h4>
-        <h4 className="lg:w-4/12 w-5/12 lg:text-base md:text-sm text-xs text-center font-semibold">price</h4>
+        <h4 className="lg:w-4/12 w-5/12 lg:text-base md:text-sm text-xs pl-12 font-semibold">
+          items
+        </h4>
+        <h4 className="lg:w-4/12 w-2/12 lg:text-base md:text-sm text-xs text-center font-semibold">
+          Quantity
+        </h4>
+        <h4 className="lg:w-4/12 w-5/12 lg:text-base md:text-sm text-xs text-center font-semibold">
+          price
+        </h4>
       </div>
 
       {items.map((item) => (
@@ -44,7 +50,10 @@ const CartCard = ({ items }) => {
           {/* {//console.log(item, "items")} */}
 
           <div className="w-5/12">
-            <h1 className="lg:text-base md:text-sm text-[10px] "> {item.card.info.name}</h1>
+            <h1 className="lg:text-base md:text-sm text-[10px] ">
+              {" "}
+              {item.card.info.name}
+            </h1>
           </div>
           <div className="w-2/12 text-center">
             <div className="bg-slate-200 lg:w-32 w-12 mx-auto ">
@@ -56,12 +65,13 @@ const CartCard = ({ items }) => {
                 -{" "}
               </button>
 
-              <span className="lg:px-4 lg:text-base md:text-sm text-[10px]">{item.cartQuantity}</span>
+              <span className="lg:px-4 lg:text-base md:text-sm text-[10px]">
+                {item.cartQuantity}
+              </span>
               <button
                 className="lg:mx-2 mx-1  text-green-400"
                 onClick={() => handleIncrease(item)}
               >
-          
                 +
               </button>
             </div>

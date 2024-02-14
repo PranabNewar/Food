@@ -1,26 +1,133 @@
 import { useRef, useState } from "react";
 import { checkValidData } from "../utils/validate";
+import { useDispatch } from "react-redux";
+import { toggleMenu } from "../utils/redux/modalSlice";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import Google from "../assets/svg/google.svg";
 
-const Login = () => {
+const Login = ({ isModalOpen }) => {
+  const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState("");
   const email = useRef(null);
   const password = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const provider = new GoogleAuthProvider();
   function handleButtonClick() {
     const errMessage = checkValidData(
       email.current.value,
       password.current.value
     );
+    if (errMessage) return;
+    if (!isSignUp) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          // ...
+          console.log(user);
+          setIsSignUp(true);
+          dispatch(toggleMenu(false));
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setError(errorCode + ":" + errorMessage);
+          // ..
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          dispatch(toggleMenu(false));
+          navigate("/");
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setError(errorCode + ":" + errorMessage);
+        });
+    }
+
     setError(errMessage);
   }
+  function handleGoogleSignUp() {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user, "google");
+        navigate("/");
+        dispatch(toggleMenu(false));
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        setError(errorCode + ":" + errorMessage + ":" + email);
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
+
+  if (!isModalOpen) {
+    return;
+  }
   return (
-    <div>
+    <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm ">
       <form
-        className="w-[300px] h-[300px] p-5 mx-auto bg-slate-50 border-black shadow-md rounded-md"
+        className="w-[350px]  p-5  mx-auto mt-40  bg-slate-50 border-black shadow-md rounded-md"
         onSubmit={(e) => {
           e.preventDefault();
         }}
       >
-        <h1 className="font-semibold text-lg">Sign In</h1>
+        <div className="flex justify-between">
+          <h1 className="font-semibold text-lg">
+            {isSignUp ? "Sign In" : "Sign Up"}
+          </h1>{" "}
+          <p
+            className="cursor-pointer"
+            onClick={(e) => dispatch(toggleMenu(false))}
+          >
+            {" "}
+            ❌
+          </p>
+        </div>
+        {!isSignUp && (
+          <input
+            // ref={name}
+            className="block py-3  w-full px-1 mx-auto my-4 outline-none "
+            type="text"
+            placeholder="Name"
+          />
+        )}
         <input
           ref={email}
           className="block py-3  w-full px-1 mx-auto my-4 outline-none "
@@ -40,8 +147,23 @@ const Login = () => {
           className="mx-auto mt-3 bg-green-300 w-full py-2 px-2 rounded-md"
         >
           {" "}
-          Sign In
+          {isSignUp ? "Sign In" : "Sign Up"}
         </button>
+        <button
+          className="mx-auto mt-3 bg-green-300 w-full py-2 px-2 rounded-md"
+          onClick={handleGoogleSignUp}
+        >
+          Sign in with <img src={Google} className="w-4 inline-block" />
+        </button>
+        <p
+          className="py-4 text-xs cursor-pointer"
+          onClick={(e) => setIsSignUp(!isSignUp)}
+        >
+          {" "}
+          {isSignUp
+            ? "Don't have an account?Sign up here"
+            : "Already have an Account? Sign In now"}
+        </p>
         {/* </div> */}
       </form>
     </div>

@@ -8,6 +8,14 @@ import WhatOnMind from "./WhatOnMind";
 import UserContext from "../utils/UserContext";
 import uesRestrauntData from "../utils/useRestrauntData";
 import { generateProxyUrl } from "../utils/constants";
+import Login from "./Login";
+import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/redux/userSlice";
+import { auth } from "../utils/firebase";
+import GetLocation from "./GetLocation";
+import LocationContext from "../utils/context/LocationContext";
+import { stringify } from "postcss";
 const Body = () => {
   //Local State Variables - Super powerful variable
   const [restraunt, setRestraunt] = useState([]); //here it did array destruturing
@@ -18,55 +26,123 @@ const Body = () => {
   const [whatsOnYourMind, setWhatsOnYourMind] = useState();
   const [topRestraunt, setTopRestraunt] = useState();
   const [current, setCurrent] = useState(0);
+  const [onCloseModal, setOnCloseModal] = useState(false);
+  const { location ,dataFromLocal} = useContext(LocationContext);
+ 
 
+  console.log(location, "locationssss");
+  const dispatch = useDispatch();
   // whenever state variables update, react triggers a reconciliation cycle(RE - render component)
   //console.log("body rendered");
 
   const { logggdInUser, setUserName } = useContext(UserContext);
 
+  const isModalOpen = useSelector((state) => state.modal.isMenuOpen);
+  console.log(isModalOpen, "isModalOpen");
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const { uid, email, displayName, photoURL } = user;
+
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        dispatch(removeUser());
+      }
+    });
+  }, []);
+
   useEffect(() => {
     getData();
-  }, []);
+  }, [location]);
+  useEffect(()=>{
+    const storedData = JSON.parse(localStorage.getItem('address:'))
+  },[])
 
   // const resData = uesRestrauntData();
   //console.log(resData, "data from custom hook");
 
   async function getData() {
     try {
-      const resource = generateProxyUrl(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.176673&lng=91.760003&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
+      if (location !== null) {
+        const resource = generateProxyUrl(
+          `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.lat}&lng=${location.lng}&is-seo-homepage-enabled=true`
+        );
+        const data = await fetch(resource);
+        const json = await data.json();
+        //console.log(
+        //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle ?.restaurants
+        // );
+        const restruntList = json.data.cards.filter((res) => {
+          return res.card.card.id === "restaurant_grid_listing";
+        });
+        setWhatsOnYourMind(
+          json.data?.cards?.filter((res) => {
+            return res?.card?.card?.id === "whats_on_your_mind";
+          })
+        );
+        setTopRestraunt(json.data?.cards[1]?.card?.card);
+        //console.log(whatsOnYourMind, "in mind");
+
+        setRestraunt(
+          restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+        );
+        // const card
+
+        setFilteredRestraunt(
+          restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+        );
+
+        console.log(json.data);
+        //console.log(filteredRestraunt, "filterr");
+        console.log(topRestraunt, "restrauntList");
+      } else {
+        const resource = generateProxyUrl(
+          `https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.1157917&lng=91.7085933&is-seo-homepage-enabled=true`
+        );
+
+        const data = await fetch(resource);
+        const json = await data.json();
+        //console.log(
+        //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle ?.restaurants
+        // );
+        const restruntList = json.data.cards.filter((res) => {
+          return res.card.card.id === "restaurant_grid_listing";
+        });
+        setWhatsOnYourMind(
+          json.data?.cards?.filter((res) => {
+            return res?.card?.card?.id === "whats_on_your_mind";
+          })
+        );
+        setTopRestraunt(json.data?.cards[1]?.card?.card);
+        //console.log(whatsOnYourMind, "in mind");
+
+        setRestraunt(
+          restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+        );
+        // const card
+
+        setFilteredRestraunt(
+          restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+        );
+
+        console.log(json.data);
+        //console.log(filteredRestraunt, "filterr");
+        console.log(topRestraunt, "restrauntList");
+      }
       // https://www.swiggy.com/mapi/restaurants/list/v5?offset=0&is-seo-homepage-enabled=true&lat=26.1157917&lng=91.7085933&carousel=true&third_party_vendor=1
       //
-
-      const data = await fetch(resource);
-      const json = await data.json();
-      //console.log(
-      //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle ?.restaurants
-      // );
-      const restruntList = json.data.cards.filter((res) => {
-        return res.card.card.id === "restaurant_grid_listing";
-      });
-      setWhatsOnYourMind(
-        json.data?.cards?.filter((res) => {
-          return res?.card?.card?.id === "whats_on_your_mind";
-        })
-      );
-      setTopRestraunt(json.data?.cards[1]?.card?.card);
-      //console.log(whatsOnYourMind, "in mind");
-
-      setRestraunt(
-        restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-      );
-      // const card
-
-      setFilteredRestraunt(
-        restruntList[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-      );
-
-      console.log(json.data);
-      //console.log(filteredRestraunt, "filterr");
-      console.log(topRestraunt, "restrauntList");
     } catch (err) {
       console.log(err);
     }
@@ -219,6 +295,9 @@ const Body = () => {
             <RestraurantCard resData={restraunt} />
           </Link>
         ))}
+      </div>
+      <div>
+        <Login isModalOpen={isModalOpen} />{" "}
       </div>
     </div>
   );

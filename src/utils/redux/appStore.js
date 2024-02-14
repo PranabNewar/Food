@@ -2,7 +2,9 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice"
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
-import sideBarSlice from "./sideBarSlice";
+
+import modalSlice from "./modalSlice";
+import userSlice from "./userSlice";
 
 let persistConfig={
     key:'root',
@@ -10,7 +12,8 @@ let persistConfig={
 }
 const rootReducer = combineReducers({
     cart: cartReducer,
-    sideBar: sideBarSlice,
+    modal: modalSlice,
+    user: userSlice,
 
 })
 let persistedReducer = persistReducer(persistConfig,rootReducer)
