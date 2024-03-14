@@ -22,6 +22,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebase";
 import { addUser, removeUser } from "./utils/redux/userSlice";
 import LocationContextProvider from "./utils/context/LocationContextProvider";
+import PaymentSuccess from "./components/PaymentSuccess";
+import OrderPage from "./components/OrderPage";
+import CartMobile from "./components/cartmobile/CartMobile";
+
 
 const AppLayout = () => {
   console.log(<Body />); // virtual dom basically an object
@@ -112,6 +116,22 @@ const appRouter = createBrowserRouter([
       {
         path: "/dish", //dynamic Route
         element: <SearchDishCard />,
+      },
+      {
+        path: "/success", //dynamic Route
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "/orders", //dynamic Route
+        element: <OrderPage />,
+      },
+      {
+        path: "/orders", //dynamic Route
+        element: <OrderPage />,
+      },
+      {
+        path: "/cartM", //dynamic Route
+        element: <CartMobile  />,
       },
     ],
     errorElement: <Error />,

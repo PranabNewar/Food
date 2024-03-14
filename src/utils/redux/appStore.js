@@ -5,6 +5,7 @@ import persistReducer from "redux-persist/es/persistReducer";
 
 import modalSlice from "./modalSlice";
 import userSlice from "./userSlice";
+import deliveryAddressSlice from "./deliveryAddressSlice";
 
 let persistConfig={
     key:'root',
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     cart: cartReducer,
     modal: modalSlice,
     user: userSlice,
+    deliveryAddress: deliveryAddressSlice,
 
 })
 let persistedReducer = persistReducer(persistConfig,rootReducer)

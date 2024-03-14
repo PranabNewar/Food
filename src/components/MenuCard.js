@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_CARD_IMG_URL } from "../utils/constants";
-import { addItem, addRestaurant } from "../utils/redux/cartSlice";
+import { addItem, addRestaurant, addUserToCart } from "../utils/redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { toggleMenu } from "../utils/redux/modalSlice";
 import Login from "./Login";
@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 const MenuCard = ({ items, restaurant }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const isModalOpen = useSelector((state) => state.modal.isMenuOpen);
-
+  const userId = useSelector((state) => state?.user?.uid);
+  console.log(userId,"userId")
   //console.log(restaurant, "items");
   // const {name,price,imageId,defaultPrice} = res?.items?.card?.info;
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const MenuCard = ({ items, restaurant }) => {
   const handleItem = (item) => {
     if (isLoggedIn) {
       dispatch(addItem(item));
+      // dispatch(addUserToCart({userId,item}))
       // dispatch(addRestaurant(restaurant))
     } else {
       dispatch(toggleMenu(true));

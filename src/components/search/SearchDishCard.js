@@ -1,18 +1,28 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../../utils/constants";
 import { addItem } from "../../utils/redux/cartSlice";
 import RightArrow from "../../assets/svg/right-arrow.svg";
 import { Link } from "react-router-dom";
 import Veg from "../../assets/images/veg.png";
 import Nonveg from "../../assets/images/nonveg.png";
+import { toggleMenu } from "../../utils/redux/modalSlice";
+import Login from "../Login";
 
 const SearchDishCard = ({ dish }) => {
   const dispatch = useDispatch();
-
+const  isLoggedIn = useSelector((state)=>state.user)
+const isModalOpen = useSelector((state)=>state.modal.isMenuOpen)
+console.log(isLoggedIn,"is test")
   const handleItem = (item) => {
+    if(isLoggedIn !==null){
     dispatch(addItem(item));
+      
+    }else{
+      dispatch(toggleMenu(true))
+    }
   };
   return (
+    <div>
     <div className="flex flex-wrap mx-auto">
       {dish.map((res) => (
         <div
@@ -73,6 +83,8 @@ const SearchDishCard = ({ dish }) => {
           </div>
         </div>
       ))}
+    </div>
+    <Login  isModalOpen={isModalOpen}/>
     </div>
   );
 };

@@ -16,6 +16,7 @@ import { auth } from "../utils/firebase";
 import GetLocation from "./GetLocation";
 import LocationContext from "../utils/context/LocationContext";
 import { stringify } from "postcss";
+import Filters from "./Filters";
 const Body = () => {
   //Local State Variables - Super powerful variable
   const [restraunt, setRestraunt] = useState([]); //here it did array destruturing
@@ -27,8 +28,8 @@ const Body = () => {
   const [topRestraunt, setTopRestraunt] = useState();
   const [current, setCurrent] = useState(0);
   const [onCloseModal, setOnCloseModal] = useState(false);
-  const { location ,dataFromLocal} = useContext(LocationContext);
- 
+  const { location, dataFromLocal } = useContext(LocationContext);
+  const [filteredData, setFilteredData] = useState(null);
 
   console.log(location, "locationssss");
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ const Body = () => {
             email: email,
             displayName: displayName,
             photoURL: photoURL,
+            isLoggedIn:true
           })
         );
         // ...
@@ -66,9 +68,9 @@ const Body = () => {
   useEffect(() => {
     getData();
   }, [location]);
-  useEffect(()=>{
-    const storedData = JSON.parse(localStorage.getItem('address:'))
-  },[])
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("address:"));
+  }, []);
 
   // const resData = uesRestrauntData();
   //console.log(resData, "data from custom hook");
@@ -87,6 +89,14 @@ const Body = () => {
         const restruntList = json.data.cards.filter((res) => {
           return res.card.card.id === "restaurant_grid_listing";
         });
+        setFilteredData(
+          json.data?.cards?.filter((res) => {
+            return (
+              res?.card?.card?.["@type"] ===
+              "type.googleapis.com/swiggy.gandalf.widgets.v2.InlineViewFilterSortWidget"
+            );
+          })
+        );
         setWhatsOnYourMind(
           json.data?.cards?.filter((res) => {
             return res?.card?.card?.id === "whats_on_your_mind";
@@ -125,6 +135,15 @@ const Body = () => {
             return res?.card?.card?.id === "whats_on_your_mind";
           })
         );
+        setFilteredData(
+          json.data?.cards?.filter((res) => {
+            return (
+              res?.card?.card?.["@type"] ===
+              "type.googleapis.com/swiggy.gandalf.widgets.v2.InlineViewFilterSortWidget"
+            );
+          })
+        );
+
         setTopRestraunt(json.data?.cards[1]?.card?.card);
         //console.log(whatsOnYourMind, "in mind");
 
@@ -149,7 +168,7 @@ const Body = () => {
   }
 
   const onlineStatus = useOnlineStatus();
-  //console.log(onlineStatus);
+  console.log(filteredData, "filtered");
   //Early return
   if (!onlineStatus) {
     return (
@@ -193,7 +212,7 @@ const Body = () => {
   return restraunt?.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className=" w-[20rem] sm:min-w-[600px] md:min-w-[670px] lg:min-w-[961px] mx-auto">
+    <div className=" w-[20rem]  sm:min-w-[600px] md:min-w-[670px] lg:min-w-[961px] mx-auto">
       {whatsOnYourMind.length !== 0 && (
         <div className="overflow-hidden my-10 pb-2 border-b ">
           <WhatOnMind whatsOnYourMind={whatsOnYourMind} />
@@ -201,7 +220,7 @@ const Body = () => {
       )}
 
       {topRestraunt?.gridElements?.infoWithStyle?.restaurants.length !== 0 && (
-        <div className=" overflow-hidden mt-6  border-b pb-2">
+        <div className=" overflow-hidden  border-b pb-2">
           <div>
             <div className="flex justify-between mb-6">
               <h1 className="font-medium text-xs md:text-xl lg:text-2xl">
@@ -242,7 +261,7 @@ const Body = () => {
         </div>
       )}
 
-      <div className="flex justify-center items-center mx-auto mt-6 mb-4">
+      {/* <div className="flex justify-center items-center mx-auto mt-6 mb-4">
         <input
           className="mr-4 mt-1 p-1 w-24 text-[6px] sm:text-[8px] md:text-[10px] lg:text-[15px] md:w-44 lg:w-60 border rounded outline-none "
           type="text"
@@ -284,9 +303,12 @@ const Body = () => {
             onChange={(e) => {
               setUserName(e.target.value);
             }} */}
-          {/* /> */}
-        </div>
-      </div>
+      {/* /> */}
+      {/* </div> */}
+      {/* </div> */}
+      {/* <div>
+        <Filters filteredData={filteredData} />
+      </div> */}
       <div className="flex flex-wrap    ">
         {/* //componenet */}
         {filteredRestraunt?.map((restraunt) => (

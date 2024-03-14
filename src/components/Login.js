@@ -8,9 +8,11 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import { auth, db } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import Google from "../assets/svg/google.svg";
+import { addDoc, collection } from "firebase/firestore";
+import { storeDataInFire } from "../utils/storeUserDataInFire";
 
 const Login = ({ isModalOpen }) => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -21,7 +23,7 @@ const Login = ({ isModalOpen }) => {
   const navigate = useNavigate();
 
   const provider = new GoogleAuthProvider();
-  function handleButtonClick() {
+  async function handleButtonClick() {
     const errMessage = checkValidData(
       email.current.value,
       password.current.value
@@ -37,16 +39,28 @@ const Login = ({ isModalOpen }) => {
           // Signed up
           const user = userCredential.user;
           // ...
+         storeDataInFire(user)
+          console.log(user, "signedup user new");
           console.log(user);
           setIsSignUp(true);
           dispatch(toggleMenu(false));
         })
+        // .then((userDetails) => {
+        //   const user = userCredential.user;
+        //   addDoc(collection(db, "Users"), {
+        //     user_id: user.uid,
+        //     name: user.displayName,
+        //     email: user.email,
+        //   });
+        //   console.log(userDetails, "details");
+        // })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setError(errorCode + ":" + errorMessage);
           // ..
         });
+      // const userRef = await
     } else {
       signInWithEmailAndPassword(
         auth,
@@ -78,6 +92,7 @@ const Login = ({ isModalOpen }) => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        storeDataInFire(user);
         console.log(user, "google");
         navigate("/");
         dispatch(toggleMenu(false));

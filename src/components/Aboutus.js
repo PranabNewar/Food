@@ -23,7 +23,7 @@ componentDidMount(){
     
  
         return(
-        <div className="about-container">
+        <div className="about-container ">
             <h1>ABout us page</h1>
             <div>Loggedin user:   {/*it is a component */}
                 <UserContext.Consumer>

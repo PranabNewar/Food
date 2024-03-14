@@ -6,7 +6,8 @@ const cartSlice = createSlice({
     items: [],
     itemsTotalQuantity: 0,
     itemsTotalAmount: 0,
-    restaurantName : '',
+    restaurantName: "",
+    userId: "",
   }, //what initially cart state will be  what whill be cart item
   reducers: {
     //we will create reducer corrosponding to action  //reducers are basically an object has different kind of action which we have take
@@ -23,14 +24,17 @@ const cartSlice = createSlice({
         state.items[itemIndex].cartQuantity += 1;
 
         // console.log(current( state.items[itemIndex].cartQuantity),"quantityyyyyyyyyyyy")
-      
-
 
         // console.log(current(state))
       }
       // console.log(itemIndex,"itemIndex")
       else {
-        const tempProduct = { ...action.payload, cartQuantity: 1, price:action.payload.card.info.price,defaultFrice:action.payload.card.info.defaultFrice };
+        const tempProduct = {
+          ...action.payload,
+          cartQuantity: 1,
+          price: action.payload.card.info.price,
+          defaultFrice: action.payload.card.info.defaultFrice,
+        };
         state.items.push(tempProduct);
       }
       // state.items.push(action.payload);
@@ -49,9 +53,6 @@ const cartSlice = createSlice({
       );
       if (itemIndex >= 0) {
         state.items[itemIndex].cartQuantity += 1;
-        
-
-
       }
     },
     decreaseItem: (state, action) => {
@@ -91,17 +92,30 @@ const cartSlice = createSlice({
           }
         );
       state.itemsTotalQuantity = totalQuantity;
-      state.itemsTotalAmount = totalPrice&& totalPrice.toFixed(2);
+      state.itemsTotalAmount = totalPrice;
     },
     clearCart: (state, action) => {
-        console.log("clear calls")
+      console.log("clear calls");
       state.items = [];
-      state.itemsTotalQuantity = 0
+      state.itemsTotalQuantity = 0;
       state.itemsTotalAmount = 0;
     },
-    addRestaurant: (state,action)=>{
-      state.restaurantName= action.payload
-    }
+    addRestaurant: (state, action) => {
+      state.restaurantName = action.payload;
+    },
+    // addUserToCart: (state, action) => {
+    //   console.log(action.payload, "payload id");
+    //   const tempData = {
+    //     ...action.payload.item,
+    //     cartUserId: action.payload.userId,
+    //   };
+    //   // state.items = action.payload.item;
+    //   // state.items = action.payload.userId ;
+
+    //   state.items.push(tempData);
+
+    //   console.log(tempData, "payload temp data ");
+    // },
   }, // these are reducer functions
 });
 
@@ -112,6 +126,7 @@ export const {
   increaseItem,
   decreaseItem,
   getTotals,
+  addUserToCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

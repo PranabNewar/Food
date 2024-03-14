@@ -21,14 +21,14 @@ const RestrauntMenu = () => {
   if (resInfo === null) {
     return <Shimmer />;
   }
-  //console.log(resInfo, "info ");
+  console.log(resInfo, "info ");
   const restrauntDetails = resInfo.cards.filter((res) => {
     return (
       res.card?.card?.["@type"] ===
       "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
     );
   });
-  //console.log(restrauntDetails, "details");
+  console.log(restrauntDetails, "details");
   const {
     name,
     costForTwoMessage,
@@ -43,8 +43,18 @@ const RestrauntMenu = () => {
   const { lastMileTravelString } = restrauntDetails[0]?.card?.card?.info?.sla;
   //console.log(lastMileTravelString);
   const { message } = restrauntDetails[0]?.card?.card?.info?.feeDetails;
+
+  const groupCard = resInfo?.cards.filter(
+    //cards[2].groupedCard.cardGroupMap.REGULAR.cards
+    (res) => {
+      //  //console.log(res)
+      return res === "groupedCard";
+    }
+  );
+  // console.log(groupCard,"group card")
+
   const categories =
-    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter(
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter(
       //cards[2].groupedCard.cardGroupMap.REGULAR.cards
       (res) => {
         //  //console.log(res)
@@ -55,9 +65,9 @@ const RestrauntMenu = () => {
       }
     );
 
-  //console.log(restrauntDetails[0]?.card?.card?.info, "res");
+  console.log(categories, "res");
   return (
-    <div className="lg:w-7/12 md:w-9/12 w-10/12 mx-auto">
+    <div className="lg:w-7/12 md:w-9/12 w-10/12 mx-auto ">
       <div className="flex justify-between pt-4">
         <div className="">
           <p className="font-bold md:text-md sm:text-sm text-xs lg:text-lg py-1">
