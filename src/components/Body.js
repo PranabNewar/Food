@@ -53,7 +53,7 @@ const Body = () => {
             email: email,
             displayName: displayName,
             photoURL: photoURL,
-            isLoggedIn:true
+            isLoggedIn: true,
           })
         );
         // ...
@@ -81,9 +81,12 @@ const Body = () => {
         const resource = generateProxyUrl(
           `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.lat}&lng=${location.lng}&is-seo-homepage-enabled=true`
         );
-        const data = await fetch(resource);
+        const data = await fetch(
+          `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.lat}&lng=${location.lng}&is-seo-homepage-enabled=true`
+        );
         const json = await data.json();
         //console.log(
+        console.log("🚀 ~ file: Body.js:89 ~ getData ~ data:", data);
         //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle ?.restaurants
         // );
         const restruntList = json.data.cards.filter((res) => {
@@ -122,9 +125,12 @@ const Body = () => {
           `https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.1157917&lng=91.7085933&is-seo-homepage-enabled=true`
         );
 
-        const data = await fetch(resource);
+        const data = await fetch(
+          `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.1157917&lng=91.7085933&is-seo-homepage-enabled=true`
+        );
         const json = await data.json();
         //console.log(
+        console.log("🚀 ~ file: Body.js:133 ~ getData ~ data:", data);
         //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle ?.restaurants
         // );
         const restruntList = json.data.cards.filter((res) => {

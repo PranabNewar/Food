@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 6000;
 const cors = require("cors");
 const stripe = require("stripe")(
   "sk_test_51OGD1UBZ38hpuCTdhlVnMUcqfXXrmdaQ503Cb5qayyPRsJcwp5mfucmgn64FmZ0bAWpFiTF6DmVKjsL787oBOnfe00O47QDcaq"
@@ -21,7 +21,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
       product_data: {
         name: res.card.info.name,
       },
-      unit_amount: Math.round(res.price  ),
+      unit_amount: Math.round(res.price),
     },
     quantity: res.cartQuantity,
   }));
