@@ -12,10 +12,15 @@ const useRestrauntMenu = (resId) => {
     try {
       const resource = generateProxyUrl(MENU_API + resId);
 
-      const data = await fetch(resource);
+      const data = await fetch(
+        `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.16363&lng=91.7611838&restaurantId=${resId}`
+      );
       const json = await data.json();
+      console.log(
+        "🚀 ~ file: useRestrauntMenu.js:19 ~ fetchMenu ~ json:",
+        json
+      );
       setResinfo(json.data);
-      console.log(resInfo, "resInfo");
     } catch (err) {
       //console.log("hey");
       console.log(err);

@@ -5,6 +5,10 @@ import StarRating from "../assets/svg/starRating.svg";
 
 const RestraurantCard = (props) => {
   const { resData } = props;
+  console.log(
+    "🚀 ~ file: RestraurantCard.js:8 ~ RestraurantCard ~ resData:",
+    resData
+  );
   const { logggdInUser } = useContext(UserContext);
   // const {name,cuisines,avgRating, cloudinaryImageId} = resData.data
   // //console.log(resData.info.name) text-[10px] md:text-sm

@@ -78,11 +78,11 @@ const Body = () => {
   async function getData() {
     try {
       if (location !== null) {
-        const resource = generateProxyUrl(
-          `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.lat}&lng=${location.lng}&is-seo-homepage-enabled=true`
-        );
+        // const resource = generateProxyUrl(
+        //   `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.lat}&lng=${location.lng}&is-seo-homepage-enabled=true`
+        // );
         const data = await fetch(
-          `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.lat}&lng=${location.lng}&is-seo-homepage-enabled=true`
+          `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.lat}&lng=${location.lng}&is-seo-homepage-enabled=true`
         );
         const json = await data.json();
         //console.log(

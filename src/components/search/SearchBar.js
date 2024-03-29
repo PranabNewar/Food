@@ -15,15 +15,28 @@ const SearchBar = () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
+  console.log(
+    "🚀 ~ file: SearchBar.js:18 ~ SearchBar ~ searchQuery:",
+    searchQuery
+  );
 
   const getSearchResults = async () => {
     //console.log("api - ", searchQuery);
-    const resource = generateProxyUrl(SWIGGY_SEARCH_API + searchQuery);
-
-    const data = await fetch(resource);
-    const json = await data.json();
-    //console.log(json);
-    setSearchResult(json.data);
+    // const resource = generateProxyUrl(); 
+    try {
+      const data = await fetch(
+        `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/search/suggest?lat=26.176673&lng=91.760003&str=${searchQuery}`
+      );
+      const json = await data.json();
+      console.log(
+        "🚀 ~ file: SearchBar.js:31 ~ getSearchResults ~ json:",
+        json
+      );
+      //console.log(json);
+      setSearchResult(json.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   // //console.log(searchResult, "search");
 

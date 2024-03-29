@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
-const port = 6000;
+const port = 7000;
 const cors = require("cors");
 const stripe = require("stripe")(
-  "sk_test_51OGD1UBZ38hpuCTdhlVnMUcqfXXrmdaQ503Cb5qayyPRsJcwp5mfucmgn64FmZ0bAWpFiTF6DmVKjsL787oBOnfe00O47QDcaq"
+  "sk_test_51OkhDgSDjGYeKK2dQ8XIpbsZ2S8cvxreY5SSBGfzzR7fZnfg9xNkwwuDz3itKQEr3FeJI3u5dZWWCvVdcwK4wkph00FLgAbAwD"
 );
+// "sk_test_51OGD1UBZ38hpuCTdhlVnMUcqfXXrmdaQ503Cb5qayyPRsJcwp5mfucmgn64FmZ0bAWpFiTF6DmVKjsL787oBOnfe00O47QDcaq"
+// "sk_test_51OkhDgSDjGYeKK2dRuQsx0FJfyjm4o77fFXUdmDtQjDf483bZ2Tvr9oafkHu6HZzuDdtlDwHfmZ1MBWTNNxAqgXu00tpBXbLTD"
 
 app.use(express.json());
 app.use(cors());
@@ -14,6 +16,7 @@ app.get("", (req, res) => {
 
 app.post("/api/create-checkout-session", async (req, res) => {
   const { cart } = req.body;
+  console.log("🚀 ~ file: app.js:17 ~ app.post ~ cart:", cart);
   console.log(cart);
   const lineItems = cart.items.map((res) => ({
     price_data: {

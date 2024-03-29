@@ -25,10 +25,10 @@ const GetLocation = ({ isLocationOpen, setIsLocationOpen }) => {
   async function getData() {
     // console.log(e);
     try {
-      const resource = generateProxyUrl(
-        "https://www.swiggy.com/dapi/misc/place-autocomplete?input=" + query
+      const resource = generateProxyUrl();
+      const data = await fetch(
+        `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/misc/place-autocomplete?input=${query}`
       );
-      const data = await fetch(resource);
       const json = await data.json();
       setSuggestedLocations(json.data);
       console.log(json.data, "data");
@@ -38,10 +38,10 @@ const GetLocation = ({ isLocationOpen, setIsLocationOpen }) => {
   }
   async function handleClick(res) {
     try {
-      const resource = generateProxyUrl(
-        `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${res?.place_id}`
+      const resource = generateProxyUrl();
+      const data = await fetch(
+        `https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/misc/address-recommend?place_id=${res?.place_id}`
       );
-      const data = await fetch(resource);
       const json = await data.json();
       console.log(json.data, "aftr");
       const { formatted_address } = json.data[0];

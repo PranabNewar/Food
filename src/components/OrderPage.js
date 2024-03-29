@@ -7,7 +7,7 @@ import OrderCard from "./OrderCard";
 
 const OrderPage = () => {
   const [order, setOrders] = useState(null);
-  const userId = useSelector((state) => state.user.uid);
+  const userId = useSelector((state) => state?.user?.uid);
   useEffect(() => {
     getData();
   }, []);

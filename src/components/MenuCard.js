@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_CARD_IMG_URL } from "../utils/constants";
-import { addItem, addRestaurant, addUserToCart } from "../utils/redux/cartSlice";
+import {
+  addItem,
+  addRestaurant,
+  addUserToCart,
+} from "../utils/redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { toggleMenu } from "../utils/redux/modalSlice";
 import Login from "./Login";
@@ -9,7 +13,7 @@ const MenuCard = ({ items, restaurant }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const isModalOpen = useSelector((state) => state.modal.isMenuOpen);
   const userId = useSelector((state) => state?.user?.uid);
-  console.log(userId,"userId")
+  console.log(userId, "userId");
   //console.log(restaurant, "items");
   // const {name,price,imageId,defaultPrice} = res?.items?.card?.info;
   const dispatch = useDispatch();
@@ -34,7 +38,7 @@ const MenuCard = ({ items, restaurant }) => {
   };
   return (
     <div>
-      {items.map((item) => (
+      {items?.map((item) => (
         <div
           key={item?.card?.info?.id}
           className="flex justify-between my-4 border-b border-gray-200"

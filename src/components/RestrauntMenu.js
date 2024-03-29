@@ -15,6 +15,10 @@ const RestrauntMenu = () => {
   // //console.log(resId);
 
   const resInfo = useRestrauntMenu(resId); //Custom hook
+  console.log(
+    "🚀 ~ file: RestrauntMenu.js:18 ~ RestrauntMenu ~ resInfo:",
+    resInfo
+  );
   useEffect(() => {
     setShowIndex(0);
   }, []);
@@ -28,6 +32,10 @@ const RestrauntMenu = () => {
       "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
     );
   });
+  console.log(
+    "🚀 ~ file: RestrauntMenu.js:31 ~ restrauntDetails ~ restrauntDetails:",
+    restrauntDetails
+  );
   console.log(restrauntDetails, "details");
   const {
     name,
@@ -53,17 +61,31 @@ const RestrauntMenu = () => {
   );
   // console.log(groupCard,"group card")
 
+  const groupedcard = resInfo?.cards?.filter(
+    (res) => res.groupedCard?.cardGroupMap?.REGULAR.cards
+  );
+  console.log(
+    "🚀 ~ file: RestrauntMenu.js:65 ~ RestrauntMenu ~ groupedcard:",
+    groupedcard[0]
+  );
+
   const categories =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter(
+    groupedcard[0]?.groupedCard?.cardGroupMap?.REGULAR.cards.filter(
       //cards[2].groupedCard.cardGroupMap.REGULAR.cards
       (res) => {
+        // cards[2].groupedCard.cardGroupMap.REGULAR.cards[1].card.card["@type"]
         //  //console.log(res)
         return (
           res.card?.["card"]?.["@type"] ===
+          // "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory" ||
           "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
         );
       }
     );
+  console.log(
+    "🚀 ~ file: RestrauntMenu.js:65 ~ RestrauntMenu ~ categories:",
+    categories
+  );
 
   console.log(categories, "res");
   return (

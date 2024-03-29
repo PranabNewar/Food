@@ -6,6 +6,10 @@ import MenuCard from "../MenuCard";
 import SearchDishCard from "./SearchDishCard";
 
 const SearchRestraunt = ({ searchedData }) => {
+  console.log(
+    "🚀 ~ file: SearchRestraunt.js:9 ~ SearchRestraunt ~ searchedData:",
+    searchedData
+  );
   //console.log(searchedData, "searchedData in prorp");
 
   const dishes =
@@ -17,28 +21,37 @@ const SearchRestraunt = ({ searchedData }) => {
         );
       }
     );
-  //console.log(dishes, "dishesesd");
-//  const rest= searchedData?.cards[1]?.groupedCard?.cardGroupMap?.RESTAURANT?.cards.filter(
-//     (res) => {
-//       return (
-//         res.card?.card?.["@type"] ===
-//        "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+  console.log(
+    "🚀 ~ file: SearchRestraunt.js:16 ~ SearchRestraunt ~ dishes:",
+    dishes
+  );
 
-//       );
-//     }
-//   );
-// //console.log(rest,"resttttt")
+  //console.log(dishes, "dishesesd");
+  //  const rest= searchedData?.cards[1]?.groupedCard?.cardGroupMap?.RESTAURANT?.cards.filter(
+  //     (res) => {
+  //       return (
+  //         res.card?.card?.["@type"] ===
+  //        "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+
+  //       );
+  //     }
+  //   );
+  // //console.log(rest,"resttttt")
   //   const { info } =
   const restraunt =
     searchedData?.cards[1]?.groupedCard?.cardGroupMap?.RESTAURANT?.cards[0]
       ?.card?.card.info;
   //console.log(restraunt, "info in prop");
+  console.log(
+    "🚀 ~ file: SearchRestraunt.js:37 ~ SearchRestraunt ~ restraunt:",
+    restraunt
+  );
 
   return (
     <div>
       {dishes ? (
         <div>
-        <SearchDishCard dish={dishes} />  
+          <SearchDishCard dish={dishes} />
         </div>
       ) : (
         <SearchRestrauntCard data={restraunt} />
