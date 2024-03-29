@@ -24,7 +24,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //console.log(cartItems, "in cart");
+  // console.log(cartItems, "in cart");
   const handleClearCart = () => {
     dispatch(clearCart());
   };
